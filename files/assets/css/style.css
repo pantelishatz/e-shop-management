@@ -1,0 +1,54 @@
+html{
+    height: 100%;
+    box-sizing: border-box;
+}
+
+body {
+    /* padding-top: 80px; */
+    height: 100%;
+}
+
+header {
+    background-image: url('../images/final-gif.gif');
+    background-size: cover;
+    background-repeat: no-repeat ;
+    min-height: 30%;
+}
+
+.card {
+    border: none;
+}
+
+.card-img {
+    border-radius: 10%;
+    height: 250px;
+}
+
+.card-title {
+    color: #006994;
+}
+
+.card-title a {
+    text-decoration: none;
+}
+footer {
+    background-color: #070808;
+    height: 150px;
+    position: absolute; 
+}
+
+.list {
+    margin-bottom: 50px;
+    margin-top: 50px;
+   
+}
+
+
+.footerfind2 {
+    margin-top: 500px;
+    
+}
+
+.footerfind {
+    margin-top: 450px;
+}
