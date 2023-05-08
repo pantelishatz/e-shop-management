@@ -211,24 +211,34 @@ exports.options = {
           }
         }
       },
-      "/api/product/update": {
+      "/api/product/update/{product}": {
         "patch": {
           "tags": [
             "Products"
           ],
           "description": "Update a product in app",
-          "parameters": [{
+          "parameters": [
+            {
+              "name": "product",
+              "in": "path",
+              "description": "Name of product that needs to be updated",
+              "type": "string",
+              "required": true
+            },
+            {
               "name": "Update product in system",
               "in": "body",
-              "description": "Name of product that needs to be updated",
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "product": {"type": "string"},
-                        "cost": {"type": "number"},
-                        "description": {"type": "string"} ,
-                        "quantity": {"type": "number"}
-                    }}}],
+              "description": "Product details to be updated",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cost": {"type": "number"},
+                  "description": {"type": "string"} ,
+                  "quantity": {"type": "number"}
+                }
+              }
+            }
+          ],
           "produces": [
             "application/json"
           ],

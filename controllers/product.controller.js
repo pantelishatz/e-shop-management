@@ -61,7 +61,7 @@ exports.update = function(req, res) {
         quantity: req.body.quantity,
     };
 
-    Product.findOneAndUpdate({product: product}, updateProduct, {new:true}, (err, result) => {
+    Product.findOneAndUpdate({product: product}, {$set: updateProduct}, {new:true}, (err, result) => {
         if (err) {
             res.status(400).json({status: false, data: err})
             console.log(`Problem in updating product`, err)
