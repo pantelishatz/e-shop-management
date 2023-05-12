@@ -1,8 +1,8 @@
 function updateProduct(event) {
-    event.preventDefault(); // Προσθέστε αυτή τη γραμμή για να αποτρέψετε την επαναφόρτωση της σελίδας
+    event.preventDefault(); 
 
     const urlParams = new URLSearchParams(window.location.search);
-    let product = urlParams.get('product'); // Προσθέστε αυτή τη γραμμή για να πάρετε το product από το URL
+    let product = urlParams.get('product'); 
     let cost = $("#cost").val();
     let description = $("#description").val();
     let quantity = $("#quantity").val();
@@ -25,11 +25,11 @@ function updateProduct(event) {
         let status = response.status
 
         if (status) { 
-            console.log(true,'Επιτυχής ενημέρωση του προϊόντος');
+            console.log('Επιτυχής ενημέρωση του προϊόντος');
             alert('Επιτυχής ενημέρωση του προϊόντος!');
             $('#updateProductForm')[0].reset();
         } else {
-            console.log(false,'Πρόβλημα στην ενημέρωση του προϊόντος ('+ data.message + ')');
+            console.log('Πρόβλημα στην ενημέρωση του προϊόντος ('+ data.message + ')');
             alert('Πρόβλημα στην ενημέρωση του προϊόντος ('+ data.message + ')');
             $('#updateProductForm')[0].reset();
         }

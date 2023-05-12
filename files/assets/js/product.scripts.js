@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-    // Ανάγνωση προϊόντων
     $.ajax({
       url:'http://localhost:3000/api/product/findall',
       type:'get',
@@ -13,11 +12,10 @@ $(document).ready(function(){
       if (status) { 
           createTbody(data);
       } else {
-          alert(false,'Πρόβλημα στην αναζήτηση των προϊόντων ('+ data.message + ')');
+          alert('Πρόβλημα στην αναζήτηση των προϊόντων ('+ data.message + ')');
       }
     });
   
-    // Δημιουργία προϊόντος
     $('.row').off('click', '.btnSubmit').on('click', '.btnSubmit', function () {
   
       let product = $("#product").val();
@@ -43,11 +41,11 @@ $(document).ready(function(){
         let status = response.status
     
         if (status) { 
-            alert(true,'Επιτυχής εισαγωγή του προϊόντος');
+            alert('Επιτυχής εισαγωγή του προϊόντος');
             $('#frmProduct')[0].reset();
             createTbody(data);
         } else {
-            alert(false,'Πρόβλημα στην εισαγωγή του προϊόντος ('+ data.message + ')');
+            alert('Πρόβλημα στην εισαγωγή του προϊόντος ('+ data.message + ')');
             $('#frmProduct')[0].reset();
         }
       });
@@ -83,25 +81,17 @@ $(document).ready(function(){
       }
       
       $(document).ready(function () {
+        $(document).on('click', '.btnDeleteProduct', function () {
+          var product = $(this).val();
+          deleteProduct(product);
+      });
         $(document).on('click', '.btnUpdateProduct', function () {
           var product = $(this).val();
           window.location.href = 'updateproduct.html?product=' + encodeURIComponent(product);
         });
       
-        // Συνδέστε το συμβάν submit της φόρμας με τη συνάρτηση updateProduct
         $(document).on('submit', '#updateProductForm', updateProduct);
       });
-      
-      function showalert(status, message) {
-        if (status) {
-          $('.alert').addClass('alert-success');
-          $('.alert').removeClass('alert-danger');
-        } else {
-          $('.alert').addClass('alert-danger');
-          $('.alert').removeClass('alert-success');
-        }
-        $('.alert').html(message);
-      }
       
       function getParameterByName(name, url) {
         if (!url) url = window.location.href;
@@ -133,9 +123,35 @@ $(document).ready(function(){
           }
         })
         .done(function (response) {
-          showalert(true, 'Επιτυχής ενημέρωση του προϊόντος!');
+          alert('Επιτυχής ενημέρωση του προϊόντος!');
         })
         .fail(function (error) {
-          showalert(false, 'Αποτυχία ενημέρωσης του προϊόντος.');
+          alert('Αποτυχία ενημέρωσης του προϊόντος.');
         });
       }
+
+      function deleteProduct(product) {
+        let confirmation = confirm('Are you sure you want to delete this product?');
+        if (confirmation) {
+            $.ajax({
+                url: 'http://localhost:3000/api/product/delete/' + product,
+                type: 'delete',
+                dataType: 'JSON'
+            })
+            .done(function (response) {
+                let data = response.data;
+                let status = response.status;
+    
+                if (status) { 
+                    alert('Επιτυχής διαγραφή του προϊόντος');
+                } else {
+                    alert('Πρόβλημα στη διαγραφή του προϊόντος ('+ data.message + ')');
+                }
+            })
+            .fail(function (error) {
+                alert('Αποτυχία διαγραφής του προϊόντος.');
+            });
+        }
+    }
+
+

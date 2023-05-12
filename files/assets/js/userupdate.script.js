@@ -1,8 +1,8 @@
 function updateUser(event) {
-    event.preventDefault(); // Προσθέστε αυτή τη γραμμή για να αποτρέψετε την επαναφόρτωση της σελίδας
+    event.preventDefault(); 
 
     const urlParams = new URLSearchParams(window.location.search);
-    let username = urlParams.get('username'); // Προσθέστε αυτή τη γραμμή για να πάρετε το username από το URL
+    let username = urlParams.get('username');
     let password = $("#password").val();
     let name = $("#name").val();
     let surname = $("#surname").val();
@@ -31,11 +31,11 @@ function updateUser(event) {
         let status = response.status
 
         if (status) { 
-            console.log(true,'Επιτυχής ενημέρωση του χρήστη');
+            console.log('Επιτυχής ενημέρωση του χρήστη');
             alert('Επιτυχής ενημέρωση του χρήστη');
             $('#frmUser')[0].reset();
         } else {
-            console.log(false,'Πρόβλημα στην ενημέρωση του χρήστη ('+ data.message + ')');
+            console.log('Πρόβλημα στην ενημέρωση του χρήστη ('+ data.message + ')');
             alert('Πρόβλημα στην ενημέρωση του χρήστη ('+ data.message + ')');
             $('#frmUser')[0].reset();
         }

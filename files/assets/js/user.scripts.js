@@ -6,7 +6,6 @@ $(document).ready(function(){
     dataType:'JSON'
   })
   .done(function(response){
-    // console.log(">>", response);
     let data = response.data;
     let status = response.status
     
@@ -14,7 +13,6 @@ $(document).ready(function(){
         createTbody(data);
     } else {
         showAlert(false,'Πρόβλημα στην αναζήτηση των χρηστών ('+ data.message + ')');
-        // console.log(data);
     }
   });
 
@@ -38,29 +36,25 @@ $(document).ready(function(){
       'phone': phone
     }
 
-    //console.log($('.btnSubmit').val(), item);
     $.ajax({
       url: "http://localhost:3000/api/user/create",
       type: "post",
       data: item,
       dataType: "JSON",
-      // encode: true,
     })
     .done( function(response) {
-      // console.log(">>", response);
       
       let data = response.data;
       let status = response.status
   
       if (status) { 
-          console.log(true,'Επιτυχής εισαγωγή του χρήστη');
-          alert(true,'Επιτυχής εισαγωγή του χρήστη');
+          console.log('Επιτυχής εισαγωγή του χρήστη');
+          alert('Επιτυχής εισαγωγή του χρήστη');
           $('#frmUser')[0].reset();
       } else {
-          console.log(false,'Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
-          alert(false,'Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
+          console.log('Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
+          alert('Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
           $('#frmUser')[0].reset();
-          // console.log(data.message);
       }
     });
 
@@ -73,7 +67,6 @@ function createTbody(data){
 
   $("#userTable > tbody").empty();
 
-  // console.log("CreateTBody", data);
   const len = data.length;
   for (let i=0; i<len; i++){
     let username = data[i].username;
@@ -106,20 +99,9 @@ $(document).ready(function () {
     window.location.href = 'update.html?username=' + username;
   });
 
-  // Συνδέστε το συμβάν submit της φόρμας με τη συνάρτηση updateUser
   $('#updateUserForm').on('submit', updateUser);
 });
 
-function showAlert(status, message) {
-  if (status) {
-    $('.alert').addClass('alert-success');
-    $('.alert').removeClass('alert-danger');
-  } else {
-    $('.alert').addClass('alert-danger');
-    $('.alert').removeClass('alert-success');
-  }
-  $('.alert').html(message);
-}
 function getParameterByName(name, url) {
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, '\\$&');
@@ -133,7 +115,6 @@ function getParameterByName(name, url) {
 function updateUser(event) {
   event.preventDefault();
 
-  // Λήψη των τιμών από τη φόρμα
   var username = getParameterByName('username');
   var name = $('#name').val();
   var surname = $('#surname').val();
@@ -154,12 +135,35 @@ function updateUser(event) {
       phone: phone
     }
   })
-    .done(function (response) {
-      // Επιτυχία: Εμφάνιση του μηνύματος επιτυχίας
-      showAlert(true, 'Επιτυχής ενημέρωση του χρήστη!');
-    })
-    .fail(function (error) {
-      // Σφάλμα: Εμφάνιση του μηνύματος σφάλματος
-      showAlert(false, 'Αποτυχία ενημέρωσης του χρήστη.');
-    });
 }
+
+$(document).ready(function () {
+  $(document).on('click', '.btnDelete', function () {
+      var username = $(this).val();
+      deleteUser(username);
+  });
+
+  function deleteUser(username) {
+    let confirmation = confirm('Are you sure you want to delete this user?');
+    if (confirmation) {
+        $.ajax({
+            url: 'http://localhost:3000/api/user/delete/' + username,
+            type: 'delete',
+            dataType: 'JSON'
+        })
+        .done(function (response) {
+            let data = response.data;
+            let status = response.status;
+
+            if (status) { 
+                alert('Επιτυχής διαγραφή του χρήστη');
+            } else {
+                alert('Πρόβλημα στη διαγραφή του χρήστη ('+ data.message + ')');
+            }
+        })
+        .fail(function (error) {
+            alert('Αποτυχία διαγραφής του χρήστη.');
+        });
+    }
+}
+});

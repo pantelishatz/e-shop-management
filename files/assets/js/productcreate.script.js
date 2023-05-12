@@ -23,12 +23,12 @@ function createProduct() {
       let status = response.status;
   
       if (status) { 
-        console.log(true,'Επιτυχής εισαγωγή του προϊόντος');
-        alert(true,'Επιτυχής εισαγωγή του προϊόντος');
+        console.log('Επιτυχής εισαγωγή του προϊόντος');
+        alert('Επιτυχής εισαγωγή του προϊόντος');
         $('#frmProduct')[0].reset();
       } else {
-        console.log(false,'Πρόβλημα στην εισαγωγή του προϊόντος ('+ data.message + ')');
-        alert(false,'Πρόβλημα στην εισαγωγή του προϊόντος ('+ data.message + ')');
+        console.log('Πρόβλημα στην εισαγωγή του προϊόντος ('+ data.message + ')');
+        alert('Πρόβλημα στην εισαγωγή του προϊόντος ('+ data.message + ')');
         $('#frmProduct')[0].reset();
       }
     });

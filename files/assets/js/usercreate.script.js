@@ -28,12 +28,12 @@ function createUser() {
       let status = response.status
   
       if (status) { 
-          console.log(true,'Επιτυχής εισαγωγή του χρήστη');
-          alert(true,'Επιτυχής εισαγωγή του χρήστη');
+          console.log('Επιτυχής εισαγωγή του χρήστη');
+          alert('Επιτυχής εισαγωγή του χρήστη');
           $('#frmUser')[0].reset();
       } else {
-          console.log(false,'Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
-          alert(false,'Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
+          console.log('Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
+          alert('Πρόβλημα στην εισαγωγή του χρήστη ('+ data.message + ')');
           $('#frmUser')[0].reset();
       }
     });
