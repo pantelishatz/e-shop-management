@@ -7,18 +7,6 @@ const validateEmail = (email) => {
     return re.test(email)
 }
 
-// let addressSchema = new Schema({
-//     area: {type: String},
-//     road: {type: String}
-// }, {_id: false})
-
- 
-
-// let phoneSchema = new Schema({
-//     type: {type: String},
-//     number: {type: String}
-// }, {_id: false})
-
 let productSchema = new Schema({
     product: {type: String},
     cost: {type: Number},
@@ -68,9 +56,6 @@ phone : {
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Email address is not valid']
 },
 
-    // address : addressSchema,
-    // phone: {type : [phoneSchema], null: true } ,
-    // products : {type: [productSchema], null: true}
 }, 
 
 {

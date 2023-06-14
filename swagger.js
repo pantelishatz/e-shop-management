@@ -1,11 +1,14 @@
 const m2s = require('mongoose-to-swagger')
 const User = require('./models/user.model')
 const Product = require('./models/product.model')
+const Partner = require('./models/partner.model');
+
 
 exports.options = {
     "definitions": {
         User: m2s(User),
-        Product: m2s(Product)
+        Product: m2s(Product),
+        Partner: m2s(Partner)
     },
 
 
@@ -26,6 +29,10 @@ exports.options = {
         {
             "name": "Products",
             "description": "API for Products"
+        },
+        {
+            "name": "Partners",
+            "description": "API for partners"
         },
         
         {
@@ -78,6 +85,41 @@ exports.options = {
         }
     }
 },
+"/api/user/login": {
+  "post": {
+      "tags": [
+          "Users"
+      ],
+      "parameters": [
+          {
+              "name": "username",
+              "in": "body",
+              "required": true,
+              "description": "Username of user",
+              "type": "string"
+          },
+          {
+              "name": "password",
+              "in": "body",
+              "required": true,
+              "description": "Password of user",
+              "type": "string"
+          }
+      ],
+      "summary": "User login",
+      "responses": {
+          "200": {
+              "description": "Successful login",
+              "schema": {
+                  "$ref": "#/definitions/User"
+              }
+          },
+          "400": {
+              "description": "Invalid username or password"
+          }
+      }
+  }
+},
 "/api/user/create": {
     "post": {
         "tags": [
@@ -90,7 +132,6 @@ exports.options = {
             "description": "Users parameters that we will create",
             "schema": {
                  "$ref": "#/definitions/User",
-                // "type": "object",
                 "properties": {
                     "name": { "type":"string" },
                     "surname": { "type":"string" },
@@ -277,6 +318,120 @@ exports.options = {
           }
         }
       },
+        "/api/partner/findAll": {
+          "get": {
+            "tags": [
+              "Partners"
+            ],
+            "summary": "Get all partners from the system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Partner"
+                }
+              }
+            }
+          }
+        },
+        "/api/partner/create": {
+          "post": {
+            "tags": [
+              "Partners"
+            ],
+            "description": "Create a new partner in the app",
+            "parameters": [
+              {
+                "name": "Parameters for partner",
+                "in": "body",
+                "description": "Partner parameters that will be created",
+                "schema": {
+                  "$ref": "#/definitions/Partner"
+                }
+              }
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "New partner is created",
+                "schema": {
+                  "$ref": "#/definitions/Partner"
+                }
+              }
+            }
+          }
+        },
+        "/api/partner/update/{surname}": {
+          "patch": {
+            "tags": [
+              "Partners"
+            ],
+            "description": "Update a partner in the app",
+            "parameters": [
+              {
+                "name": "surname",
+                "in": "path",
+                "description": "Surname of the partner that needs to be updated",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "Update partner in system",
+                "in": "body",
+                "description": "Partner details to be updated",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {"type": "string"},
+                    "phone": {"type": "string"},
+                    "role": {"type": "string"}
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Partner is updated"
+              },
+              "404": {
+                "description": "Partner not found"
+              },
+              "500": {
+                "description": "Error updating partner"
+              }
+            }
+          }
+        },
+        "/api/partner/delete/{surname}": {
+          "delete": {
+            "tags": [
+              "Partners"
+            ],
+            "description": "Delete a partner from the app",
+            "parameters": [
+              {
+                "name": "surname",
+                "in": "path",
+                "description": "Surname of the partner that needs to be deleted",
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Partner is deleted",
+                "schema": {
+                  "$ref": "#/definitions/Partner"
+                }
+              }
+            }
+          }
+        },
     '/api/userproducts/findone/{username}': {
         "get": {
             "tags": [
@@ -295,5 +450,5 @@ exports.options = {
         }
         }
     }  
-}
+  }
 }

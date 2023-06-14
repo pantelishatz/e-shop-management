@@ -44,12 +44,22 @@
                 <li><a class="dropdown-item" href="./findproduct.html">Εμφάνιση</a></li>
         </ul>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#"> Αγορα Προϊοντων</a>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" 
+                href="#" 
+                id="navbar-DropDownMenuLink2" 
+                role="button" 
+                data-bs-toggle="dropdown"
+                 aria-expanded="false">Συνεργάτες</a>
+                <ul class="dropdown-menu" arial-labeledby="navbarDropDownMenuLink2">
+                <li><a class="dropdown-item" href="../partner/createpartner.html">Δημιουργία</a></li>
+                <li><a class="dropdown-item" href="../partner/findpartner.html">Εμφάνιση</a></li>
+        </ul>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#"> Στατιστικά</a>
     </li>
+    <button class="btn btn-outline-light" id="logoutButton">Logout</button>
         </ul>
         </div>
         </div>
@@ -101,6 +111,13 @@
               integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
               crossorigin="anonymous" referrerpolicy="no-referrer"></script>
               <script src="../assets/js/productcreate.script.js"></script>
+              <script>
+                const logoutButton = document.getElementById('logoutButton');
+            
+                logoutButton.addEventListener('click', () => {
+                    window.location.href = 'http://localhost:3000';
+                });
+            </script>
                     
 </body>
 </html>

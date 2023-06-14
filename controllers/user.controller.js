@@ -21,20 +21,48 @@ exports.findAll = function(req, res)  {
         }
     })
 }
+exports.login = function(req, res) {
+    const { username, password } = req.body;
+
+    console.log("User login with username", username);
+
+    User.findOne({ username: username, password: password }, (err, result) => {
+        if (err) {
+            res.status(400).json({ status: false, data: err });
+            console.log(`Problem in login user with username ${username}`, err);
+        } else {
+            if (result) {
+                req.session.user = result;
+                res.status(200).json({ status: true, data: result });
+                console.log('Success in login user', username);
+            } else {
+                res.status(400).json({ status: false, data: 'Invalid username or password' });
+                console.log('Invalid username or password');
+            }
+        }
+    });
+};
 
 exports.findOne = function(req, res) {
+    const { username, password } = req.body;
 
-    const username = req.params.username
+    console.log("Find user with username", username);
 
-    console.log("Find user with username", username)
-    
-    User.findOne({username: username}, (err, results) => {if (err) {
-        res.status(400).json({status: false, data: err})
-            console.log(`Problem in finding user with username ${username}`, err)
+User.findOne({ username: username, password: password }, (err, result) => {
+    if (err) {
+        res.status(400).json({ status: false, data: err });
+        console.log(`Problem in finding user with username ${username}`, err);
     } else {
-        res.status(200).json({status: true, data: results})
-        console.log('Success in finding users', username)
-    }})}
+        if (result) {
+            res.status(200).json({ status: true, data: result });
+            console.log('Success in finding user', username);
+        } else {
+            res.status(400).json({ status: false, data: 'Invalid username or password' });
+            console.log('Invalid username or password');
+        }
+    }
+});
+}
 
 exports.create = function (req, res) {
     const newUser = new User ({
